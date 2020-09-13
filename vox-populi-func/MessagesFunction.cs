@@ -12,14 +12,14 @@ namespace VoxPopuli
     {
         [FunctionName("messages")]
         public static Task SendMessage(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] object message,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] ClientMessage clientMessage,
             [SignalR(HubName = "chat")] IAsyncCollector<SignalRMessage> signalRMessages)
         {
             return signalRMessages.AddAsync(
                 new SignalRMessage
                 {
-                    Target = "newMessage",
-                    Arguments = new[] { message }
+                    Target = "clientMessage",
+                    Arguments = new[] { clientMessage }
                 });
         }
     }
